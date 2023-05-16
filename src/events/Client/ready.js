@@ -3,11 +3,6 @@ module.exports = async (client) => {
 
     const channel = client.channels.cache.get(client.logs);
     channel.send(`${client.user.username} online!`);
-    let count = 0; 
-    client.guilds.cache.forEach((guild) => {
-        count += guild.memberCount 
-    })
-
     client.logger.log(`${client.user.username} online!`, "ready");
 
 
