@@ -1,0 +1,11 @@
+node_modules
+.env
+
+/.vscode
+
+
+/node_modules
+/text
+
+test.js
+json.sqlite

@@ -1,0 +1,46 @@
+const { EmbedBuilder, version: djversion } = require("discord.js");
+const moment = require("moment");
+require("moment-duration-format");
+const os = require('os');
+const { version } = require('../../../package.json');
+
+module.exports = {
+    name: "botinfo",
+    category: "Information",
+    description: "Thông tin về bot",
+    args: false,
+    usage: "",
+    permission: [],
+    owner: false,
+    execute: async (message, args, client, prefix) => {
+       const duration1 = moment.duration(message.client.uptime).format(" D [days], H [hrs], m [mins], s [secs]");
+        
+        let scount = client.shard.fetchClientValues('guilds.cache.size');
+        let ccount = client.channels.cache.size;
+        let cuser = client.users.cache.filter(user => !user.bot).size;
+        let mcount = 0; 
+client.guilds.cache.forEach((guild) => {
+    mcount += guild.memberCount 
+})
+
+        const embed = new EmbedBuilder()
+            .setColor(client.embedColor)
+            .setThumbnail(message.client.user.displayAvatarURL({dynamic: true}))
+            .setDescription(`**🔎 INFORMATION**
+**- Username** : ${client.user.tag}
+**- ID** : ${client.user.id}
+**- Version** : v${version}
+**- Servers** : ${scount}
+**- Channels** : ${ccount}
+**- Users** : ${mcount}
+
+**🔰 SYSTEM**
+**- Discord.js** : v${djversion}
+**- Node.js** : ${process.version}
+**- Platfrom** : ${os.type}
+
+**${client.emoji.uptime} UPTIME** : ${duration1}
+`);
+         message.channel.send({embeds: [embed]});
+    }
+}
